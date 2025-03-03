@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { AppModule } from './database/database.module';
 import { ValidationPipe } from '@nestjs/common';
+
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -10,10 +11,11 @@ async function bootstrap() {
 
   // Préfixe global optionnel (ex: /api)
   // app.setGlobalPrefix('api');
+  app.enableCors(); // Autoriser les requêtes depuis le frontend
 
   const port = process.env.PORT || 3000;
-  const host = process.env.PORT || `localhost`;
-  await app.listen(port,host);
-  console.log(`Application is running on: http://${host}:${port}`);
+  await app.listen(port);
+
+  console.log(`Application is running on: http://localhost:${port}`);
 }
 bootstrap();
