@@ -1,18 +1,19 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToOne } from 'typeorm';
+import { Doctor } from '../doctor/doctor.entity';
 
-@Entity('users')
+export enum UserRole {
+  ADMIN = 'admin',
+  DOCTOR = 'doctor',
+  PATIENT = 'patient',
+}
+
+@Entity()
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  firstName: string;
+  firstName: string; 
 
   @Column()
   lastName: string;
@@ -23,12 +24,15 @@ export class User {
   @Column()
   password: string;
 
-  @Column({ default: 'user' })
-  role: string;
+  @Column({ type: 'enum', enum: UserRole, default: UserRole.PATIENT }) // Utilisation de l'enum ici
+  role: UserRole; 
 
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @OneToOne(() => Doctor, (doctor) => doctor.user)
+  doctor: Doctor;
 }

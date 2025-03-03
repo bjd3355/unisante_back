@@ -18,17 +18,29 @@ export class UsersController {
 
   @Get()
   async getUsers() {
-    return this.usersService.getUsers();
+    try {
+      return await this.usersService.getUsers();
+    } catch (error) {
+      throw error;  // Ou personnalise l'erreur comme nécessaire
+    }
   }
 
   @Get(':id')
   async getUserById(@Param('id', ParseIntPipe) id: number) {
-    return this.usersService.getUserById(id);
+    try {
+      return await this.usersService.getUserById(id);
+    } catch (error) {
+      throw error;  // Ou personnalise l'erreur comme nécessaire
+    }
   }
 
   @Post()
   async createUser(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.createUser(createUserDto);
+    try {
+      return await this.usersService.createUser(createUserDto);
+    } catch (error) {
+      throw error;  // Gère les erreurs si nécessaire
+    }
   }
 
   @Put(':id')
@@ -36,11 +48,19 @@ export class UsersController {
     @Param('id', ParseIntPipe) id: number,
     @Body() updateUserDto: UpdateUserDto,
   ) {
-    return this.usersService.updateUser(id, updateUserDto);
+    try {
+      return await this.usersService.updateUser(id, updateUserDto);
+    } catch (error) {
+      throw error;  // Gère les erreurs si nécessaire
+    }
   }
 
   @Delete(':id')
   async deleteUser(@Param('id', ParseIntPipe) id: number) {
-    return this.usersService.deleteUser(id);
+    try {
+      return await this.usersService.deleteUser(id);
+    } catch (error) {
+      throw error;  // Gère les erreurs si nécessaire
+    }
   }
 }
