@@ -29,15 +29,17 @@ export class Appointment {
   @JoinColumn({ name: 'patientId' })
   patient: User;
 
-  @Column()
+  // Précision du type 'date' pour le stockage de la date
+  @Column({ type: 'date' })
   date: Date;
 
-  @Column()
+  // Précision du type 'time' pour le stockage de l'heure
+  @Column({ type: 'time' })
   time: string;
 
   // Utilisation de l'enum pour la colonne status avec une valeur par défaut
   @Column({
-    type: "enum",
+    type: 'enum',
     enum: AppointmentStatus,
     default: AppointmentStatus.PENDING,
   })
