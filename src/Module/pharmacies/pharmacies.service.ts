@@ -6,33 +6,37 @@ import { CreatePharmacyDto } from './dto/create-pharmacy.dto';
 import { UpdatePharmacyDto } from './dto/update-pharmacy.dto';
 
 @Injectable()
-export class PharmaciesService {
+export class PharmacyService {
   constructor(
     @InjectRepository(Pharmacy)
     private readonly pharmacyRepository: Repository<Pharmacy>,
   ) {}
 
-  findAll(): Promise<Pharmacy[]> {
-    return this.pharmacyRepository.find();
+  async findAll(): Promise<Pharmacy[]> {
+    return await this.pharmacyRepository.find();
+  }
+
+  async getFirstTwoPharmacies(): Promise<Pharmacy[]> {
+    return this.pharmacyRepository.find({ take: 2 });
   }
 
   async findOne(id: number): Promise<Pharmacy> {
-    const pharmacy = await this.pharmacyRepository.findOneBy({ id });
+    const pharmacy = await this.pharmacyRepository.findOne({ where: { id } });
     if (!pharmacy) {
-      throw new NotFoundException(`Pharmacy with id ${id} not found`);
+      throw new NotFoundException(`Pharmacy with ID ${id} not found`);
     }
     return pharmacy;
   }
 
   async create(createPharmacyDto: CreatePharmacyDto): Promise<Pharmacy> {
-    const newPharmacy = this.pharmacyRepository.create(createPharmacyDto);
-    return this.pharmacyRepository.save(newPharmacy);
+    const pharmacy = this.pharmacyRepository.create(createPharmacyDto);
+    return await this.pharmacyRepository.save(pharmacy);
   }
 
   async update(id: number, updatePharmacyDto: UpdatePharmacyDto): Promise<Pharmacy> {
     const pharmacy = await this.findOne(id);
     Object.assign(pharmacy, updatePharmacyDto);
-    return this.pharmacyRepository.save(pharmacy);
+    return await this.pharmacyRepository.save(pharmacy);
   }
 
   async remove(id: number): Promise<void> {

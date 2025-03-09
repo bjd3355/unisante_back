@@ -7,6 +7,9 @@ export class CreateDoctorDto {
   @IsString()
   lastName: string;
 
+  @IsString()
+  email: string;
+
   @IsBoolean()
   availability: boolean;
 
