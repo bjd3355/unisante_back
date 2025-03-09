@@ -1,4 +1,6 @@
-import { IsString } from 'class-validator';
+import { IsString} from 'class-validator';
+import { Column } from 'typeorm';
+import {  pharmacyStatus } from '../pharmacy.entity';
 
 export class CreatePharmacyDto {
   @IsString()
@@ -9,4 +11,14 @@ export class CreatePharmacyDto {
 
   @IsString()
   phone: string;
+
+  @IsString()
+  status: pharmacyStatus;
+
+  @Column("double precision")
+  latitude: number;
+
+  @Column("double precision")
+  longitude: number;
+
 }

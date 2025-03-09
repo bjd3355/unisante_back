@@ -7,6 +7,9 @@ export class CreatePatientDto {
   @IsString()
   lastName: string;
 
+  @IsString()
+  email: string;
+
   @IsOptional()
   @IsDateString()
   birthDate?: Date;

@@ -10,6 +10,7 @@ import { DoctorModule } from '../Module/doctor/doctor.module';
 import { PatientModule } from '../Module/patient/patient.module';
 import { SpecialtyModule } from '../Module/specialty/specialty.module';
 import { AuthModule } from '../Module/auth/auth.module';
+import { MailModule } from '../Module/mail/mail.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { AuthModule } from '../Module/auth/auth.module';
     DoctorModule,
     PatientModule,
     SpecialtyModule,
+    MailModule,
     AuthModule, // ✅ Ajout du module d'authentification
   ],
   controllers: [AppController],

@@ -1,4 +1,4 @@
-import { AppointmentStatus } from '../appointment.entity';
+import { AppointmentStatus, AppointmentType } from '../appointment.entity';
 
 export class UpdateAppointmentDto {
   doctorId?: number;
@@ -6,4 +6,5 @@ export class UpdateAppointmentDto {
   date?: Date;
   time?: string;
   status?: AppointmentStatus;
+  type?: AppointmentType;
 }

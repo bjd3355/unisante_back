@@ -12,27 +12,27 @@ export class SpecialtyService {
     private readonly specialtyRepository: Repository<Specialty>,
   ) {}
 
-  findAll(): Promise<Specialty[]> {
-    return this.specialtyRepository.find();
+  async findAll(): Promise<Specialty[]> {
+    return await this.specialtyRepository.find();
   }
 
   async findOne(id: number): Promise<Specialty> {
-    const specialty = await this.specialtyRepository.findOneBy({ id });
+    const specialty = await this.specialtyRepository.findOne({ where: { id } });
     if (!specialty) {
-      throw new NotFoundException(`Specialty with id ${id} not found`);
+      throw new NotFoundException(`Specialty with ID ${id} not found`);
     }
     return specialty;
   }
 
   async create(createSpecialtyDto: CreateSpecialtyDto): Promise<Specialty> {
-    const newSpecialty = this.specialtyRepository.create(createSpecialtyDto);
-    return this.specialtyRepository.save(newSpecialty);
+    const specialty = this.specialtyRepository.create(createSpecialtyDto);
+    return await this.specialtyRepository.save(specialty);
   }
 
   async update(id: number, updateSpecialtyDto: UpdateSpecialtyDto): Promise<Specialty> {
     const specialty = await this.findOne(id);
     Object.assign(specialty, updateSpecialtyDto);
-    return this.specialtyRepository.save(specialty);
+    return await this.specialtyRepository.save(specialty);
   }
 
   async remove(id: number): Promise<void> {

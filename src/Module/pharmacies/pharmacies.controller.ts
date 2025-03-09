@@ -1,46 +1,45 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Put,
-  Delete,
-  Param,
-  Body,
-  ParseIntPipe,
-} from '@nestjs/common';
-import { PharmaciesService } from './pharmacies.service';
+import { Controller, Get, Post, Put, Patch, Delete, Param, Body, ParseIntPipe } from '@nestjs/common';
+import { PharmacyService } from './pharmacies.service';
 import { CreatePharmacyDto } from './dto/create-pharmacy.dto';
 import { UpdatePharmacyDto } from './dto/update-pharmacy.dto';
+import { Pharmacy } from './pharmacy.entity';
 
 @Controller('pharmacies')
-export class PharmaciesController {
-  constructor(private readonly pharmaciesService: PharmaciesService) {}
+export class PharmacyController {
+  constructor(private readonly pharmacyService: PharmacyService) {}
 
   @Get()
-  findAll() {
-    return this.pharmaciesService.findAll();
+  async findAll(): Promise<Pharmacy[]> {
+    return this.pharmacyService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.pharmaciesService.findOne(id);
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<Pharmacy> {
+    return this.pharmacyService.findOne(id);
   }
 
   @Post()
-  create(@Body() createPharmacyDto: CreatePharmacyDto) {
-    return this.pharmaciesService.create(createPharmacyDto);
+  async create(@Body() createPharmacyDto: CreatePharmacyDto): Promise<Pharmacy> {
+    return this.pharmacyService.create(createPharmacyDto);
   }
 
   @Put(':id')
-  update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() updatePharmacyDto: UpdatePharmacyDto,
-  ) {
-    return this.pharmaciesService.update(id, updatePharmacyDto);
+  async update(@Param('id', ParseIntPipe) id: number, @Body() updatePharmacyDto: UpdatePharmacyDto): Promise<Pharmacy> {
+    return this.pharmacyService.update(id, updatePharmacyDto);
+  }
+
+  @Get("first-two")
+  async getFirstTwoPharmacies(): Promise<Pharmacy[]> {
+    return this.pharmacyService.getFirstTwoPharmacies();
+  }
+
+  @Patch(':id')
+  async partialUpdate(@Param('id', ParseIntPipe) id: number, @Body() updatePharmacyDto: UpdatePharmacyDto): Promise<Pharmacy> {
+    return this.pharmacyService.update(id, updatePharmacyDto);
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.pharmaciesService.remove(id);
+  async remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
+    return this.pharmacyService.remove(id);
   }
 }

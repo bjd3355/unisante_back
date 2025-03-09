@@ -10,6 +10,10 @@ export class UpdatePatientDto {
   lastName?: string;
 
   @IsOptional()
+  @IsString()
+  email?: string;
+
+  @IsOptional()
   @IsDateString()
   birthDate?: Date;
 
