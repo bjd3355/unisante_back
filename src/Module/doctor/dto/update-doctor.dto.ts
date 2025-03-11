@@ -10,6 +10,10 @@ export class UpdateDoctorDto {
   lastName?: string;
 
   @IsOptional()
+  @IsString()
+  email?: string;
+
+  @IsOptional()
   @IsBoolean()
   availability?: boolean;
 

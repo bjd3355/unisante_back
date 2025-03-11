@@ -1,4 +1,6 @@
 import { IsString, IsOptional } from 'class-validator';
+import { Column } from 'typeorm';
+import {  pharmacyStatus } from '../pharmacy.entity';
 
 export class UpdatePharmacyDto {
   @IsOptional()
@@ -12,4 +14,14 @@ export class UpdatePharmacyDto {
   @IsOptional()
   @IsString()
   phone?: string;
+
+  @IsOptional()
+  @IsString()
+  status: pharmacyStatus;
+
+  @Column("double precision")
+    latitude: number;
+  
+  @Column("double precision")
+  longitude: number;
 }

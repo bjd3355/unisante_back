@@ -47,12 +47,14 @@ export class JwtAuthGuard implements CanActivate {
 
     const token = authHeader.split(' ')[1];
     try {
-      const decoded = this.jwtService.verify(token);
-      (request as any).user = decoded; //Fix : TypeScript ne se plaint plus !
+      const decoded = this.jwtService.verify(token, { secret: 'Unisante-NotreEquipe' });
+      (request as any).user = decoded;
       return true;
     } catch (err) {
+      console.error('Erreur lors de la vérification du token :', err);
       throw new UnauthorizedException('Invalid or expired token');
     }
+    
   }
 }
 
