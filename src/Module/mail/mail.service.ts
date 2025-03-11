@@ -10,7 +10,7 @@ export class MailService {
     const defaultClient = SibApiV3Sdk.ApiClient.instance;
     const apiKey = defaultClient.authentications['api-key'];
     // Utilisation directe de la clé API dans le code (attention : ceci n'est pas recommandé pour la production)
-    apiKey.apiKey = "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";
+    apiKey.apiKey = "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";
 
     const transactionalApi = new SibApiV3Sdk.TransactionalEmailsApi();
     const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();

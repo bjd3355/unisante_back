@@ -3,12 +3,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Appointment } from './appointment.entity';
 import { AppointmentService } from './appointments.service';
 import { AppointmentController } from './appointments.controller';
-import { User } from '../users/user.entity'; // Assurez-vous que le chemin est correct
+import { Patient } from '../patient/patient.entity';
+import { Doctor } from '../doctor/doctor.entity';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Appointment, User])
-  ],
+  imports: [TypeOrmModule.forFeature([Appointment, Patient, Doctor])],
   providers: [AppointmentService],
   controllers: [AppointmentController],
 })
