@@ -11,9 +11,10 @@ import { Patient } from '../patient/patient.entity';
 
 // Définition de l'enum pour le statut du rendez-vous
 export enum AppointmentStatus {
-  SCHEDULED = 'scheduled', // Programmé
-  PENDING = 'pending',     // En attente
-  REFUSED = 'refused',     // Refusé
+  SCHEDULED = 'confirmer', // Programmé
+  PENDING = 'en attente',     // En attente
+  REFUSED = 'refuser',     // Refusé
+  POSTPONED = 'reporter',     // Reporter
 }
 
 export enum AppointmentType {

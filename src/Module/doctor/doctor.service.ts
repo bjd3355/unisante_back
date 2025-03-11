@@ -17,20 +17,21 @@ export class DoctorService {
   }
 
   async findByUserId(userId: number): Promise<Doctor> {
-      const Doctor = await this.doctorRepository.findOne({
-        where: { user: { id: userId } },
-        relations: ['user'],
-      });
-      if (!Doctor) {
-        throw new NotFoundException(`Aucun Doctor trouvé pour l'utilisateur d'id ${userId}`);
-      }
-      return Doctor;
+    const doctor2 = await this.doctorRepository.findOne({
+      where: { userId },
+      relations: ['user'],
+    });
+    if (!doctor2) {
+      throw new NotFoundException(`Aucun doctor trouvé pour l'utilisateur d'id ${userId}`);
     }
+    return doctor2;
+  }
+
 
   async findOne(id: number): Promise<Doctor> {
     const doctor = await this.doctorRepository.findOne({ where: { id } });
     if (!doctor) {
-      throw new NotFoundException(`Doctor with id ${id} not found`);
+      throw new NotFoundException(`Doctor with id ${id} not foundDD`);
     }
     return doctor;
   }

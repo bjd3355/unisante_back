@@ -24,8 +24,11 @@ export class Doctor {
   specialty: Specialty;
 
   @OneToOne(() => User, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'userId' }) // Spécifie le nom de la colonne FK
+  @JoinColumn({ name: 'userId' })
   user: User;
+  @Column()
+  userId: number;
+
 
   // Relation vers les rendez-vous
   @OneToMany(() => Appointment, appointment => appointment.doctor)

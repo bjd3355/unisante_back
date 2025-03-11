@@ -15,30 +15,30 @@ export class DoctorController {
     return this.doctorService.findAll();
   }
 
-  @Get(':id')
-  async findOne(@Param('id', ParseIntPipe) id: number): Promise<Doctor> {
-    return this.doctorService.findOne(id);
-  }
-
   @Post()
   async create(@Body() createDoctorDto: CreateDoctorDto): Promise<Doctor> {
     return this.doctorService.create(createDoctorDto);
   }
 
   @UseGuards(JwtAuthGuard)
-    @Get(':id')
-    async getPatientProfile(@Param('id') id: string, @Req() req: Request): Promise<Doctor> {
-      // Optionnel : vérifier que l'utilisateur connecté correspond à l'id passé
-      const loggedUserId = (req as any).user?.id; // Le guard doit ajouter req.user
-      if (+id !== loggedUserId) {
-        throw new UnauthorizedException("Vous n'êtes pas autorisé à accéder à ces informations.");
-      }
-      const patient = await this.doctorService.findByUserId(+id);
-      if (!patient) {
-        throw new NotFoundException(`Patient introuvable pour l'utilisateur d'id ${id}`);
-      }
-      return patient;
+  @Get(':id')
+  async getDoctorProfile(@Param('id') id: string, @Req() req: Request): Promise<Doctor> {
+    const loggedUserId = (req as any).user?.id;
+    console.log('ID passé dans l\'URL:', id, 'ID dans le token:', loggedUserId);
+    if (+id !== loggedUserId) {
+      throw new UnauthorizedException("Vous n'êtes pas autorisé à accéder à ces informations.");
     }
+    const doctor2 = await this.doctorService.findByUserId(+id);
+    if (!doctor2) {
+      throw new NotFoundException(`doctor introuvable pour l'utilisateur d'id ${id}`);
+    }
+    return doctor2;
+  }
+
+  @Get(':id')
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<Doctor> {
+    return this.doctorService.findOne(id);
+  }
 
   @Put(':id')
   async update(@Param('id', ParseIntPipe) id: number, @Body() updateDoctorDto: UpdateDoctorDto): Promise<Doctor> {
