@@ -1,9 +1,12 @@
-import { Controller, Get, Post, Put, Patch, Delete, Param, Body, ParseIntPipe, UseGuards, NotFoundException, UnauthorizedException, Req } from '@nestjs/common';
+import { Controller, Get, Post, Put, Patch, Delete, Param, Body, ParseIntPipe, UseGuards, NotFoundException, UnauthorizedException, Req, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { DoctorService } from '../doctor/doctor.service';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
 import { UpdateDoctorDto } from './dto/update-doctor.dto';
 import { Doctor } from './doctor.entity';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'; // Ton guard JWT
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
 import { Request } from 'express';
 
 @Controller('doctor')
@@ -44,6 +47,44 @@ export class DoctorController {
   async update(@Param('id', ParseIntPipe) id: number, @Body() updateDoctorDto: UpdateDoctorDto): Promise<Doctor> {
     return this.doctorService.update(id, updateDoctorDto);
   }
+
+  // Endpoint pour l'upload de l'image
+    @Post(':id/upload-image')
+    @UseInterceptors(FileInterceptor('image', {
+      storage: diskStorage({
+        destination: './uploads/doctors',
+        filename: (req, file, callback) => {
+          // Génère un nom de fichier unique en conservant l'extension originale
+          const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+          const extension = extname(file.originalname); // récupère l'extension (.jpg, .png, etc.)
+          callback(null, `${uniqueSuffix}${extension}`);
+        },
+      }),
+    }))
+    async uploadImage(
+      @Param('id') id: number,
+      @UploadedFile() file: Express.Multer.File,
+    ) {
+      if (!file) {
+        throw new NotFoundException('Aucun fichier reçu');
+      }
+    
+      // Assurez-vous que l'URL correspond bien au chemin statique
+      const imageUrl = `/uploads/doctors/${file.filename}`;
+    
+      const updatedDoctor = await this.doctorService.updateImage(id, imageUrl);
+      return { image: imageUrl };
+    }
+    
+    // Vous pouvez aussi ajouter d'autres endpoints comme pour la suppression de l'image
+    @Put(':id/image')
+    async updateImage(
+      @Param('id') id: number,
+      @Body() body: { image: string },
+    ) {
+      const updatedDoctor = await this.doctorService.updateImage(id, body.image);
+      return { image: updatedDoctor.image };
+    }
 
   @Patch(':id')
   async partialUpdate(@Param('id', ParseIntPipe) id: number, @Body() updateDoctorDto: UpdateDoctorDto): Promise<Doctor> {

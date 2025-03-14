@@ -1,5 +1,5 @@
-import { IsString, IsOptional, IsDateString } from 'class-validator';
-
+import { IsString, IsOptional, IsDateString, IsEnum } from 'class-validator';
+import {Gender, BloodGroup} from '../patient.entity';
 export class CreatePatientDto {
   @IsString()
   firstName: string;
@@ -10,6 +10,18 @@ export class CreatePatientDto {
   @IsString()
   email: string;
 
+  @IsOptional()
+  @IsEnum(Gender)
+  gender?: Gender;
+
+  @IsOptional()
+  @IsString()
+  adresse: string;
+
+  @IsOptional()
+  @IsEnum(BloodGroup)
+  bloodGroup: BloodGroup;
+  
   @IsOptional()
   @IsDateString()
   birthDate?: Date;

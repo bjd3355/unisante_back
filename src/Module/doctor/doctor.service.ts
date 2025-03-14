@@ -27,7 +27,6 @@ export class DoctorService {
     return doctor2;
   }
 
-
   async findOne(id: number): Promise<Doctor> {
     const doctor = await this.doctorRepository.findOne({ where: { id } });
     if (!doctor) {
@@ -46,6 +45,16 @@ export class DoctorService {
     Object.assign(doctor, updateDoctorDto);
     return await this.doctorRepository.save(doctor);
   }
+
+  async updateImage(id: number, imageUrl: string): Promise<Doctor> {
+      const doctor = await this.doctorRepository.findOne({ where: { id } });
+      if (!doctor) {
+        throw new NotFoundException(`Patient with id ${id} not found`);
+      }
+      
+      doctor.image = imageUrl;
+      return this.doctorRepository.save(doctor);
+    }
 
   async remove(id: number): Promise<void> {
     const doctor = await this.findOne(id);

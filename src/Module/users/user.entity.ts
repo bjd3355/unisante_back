@@ -34,6 +34,9 @@ export class User {
   @UpdateDateColumn()
   updatedAt: Date;
 
+  @Column({ nullable: true })
+  image?: string;
+
   @OneToOne(() => Doctor, (doctor) => doctor.user)
   doctor: Doctor;
 

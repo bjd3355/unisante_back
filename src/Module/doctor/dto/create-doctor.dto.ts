@@ -1,4 +1,4 @@
-import { IsString, IsBoolean, IsNumber } from 'class-validator';
+import { IsString, IsBoolean, IsNumber, IsOptional } from 'class-validator';
 
 export class CreateDoctorDto {
   @IsString()
@@ -15,4 +15,12 @@ export class CreateDoctorDto {
 
   @IsNumber()
   specialtyId: number; // Pour lier à la table Specialty
+
+  @IsOptional()
+  @IsString()
+  address: string;
+
+  @IsOptional()
+  @IsString()
+  phoneNumber?: string;
 }

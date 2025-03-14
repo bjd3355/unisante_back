@@ -1,4 +1,5 @@
-import { IsString, IsOptional, IsDateString } from 'class-validator';
+import { IsOptional, IsString, IsDateString, IsEnum } from 'class-validator';
+import {Gender, BloodGroup} from '../patient.entity'
 
 export class UpdatePatientDto {
   @IsOptional()
@@ -12,6 +13,10 @@ export class UpdatePatientDto {
   @IsOptional()
   @IsString()
   email?: string;
+  
+  @IsOptional()
+  @IsEnum(Gender)
+  gender?: Gender;
 
   @IsOptional()
   @IsDateString()
@@ -19,5 +24,18 @@ export class UpdatePatientDto {
 
   @IsOptional()
   @IsString()
+  adresse: string;
+  
+  @IsOptional()
+  @IsEnum(BloodGroup)
+  bloodGroup: BloodGroup;
+
+  @IsOptional()
+  @IsString()
   phoneNumber?: string;
+
+  // Nouveau champ pour l'image
+  @IsOptional()
+  @IsString()
+  image?: string;
 }

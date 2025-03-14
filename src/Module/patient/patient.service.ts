@@ -49,6 +49,16 @@ export class PatientService {
     return await this.patientRepository.save(patient);
   }
 
+  async updateImage(id: number, imageUrl: string): Promise<Patient> {
+    const patient = await this.patientRepository.findOne({ where: { id } });
+    if (!patient) {
+      throw new NotFoundException(`Patient with id ${id} not found`);
+    }
+    
+    patient.image = imageUrl;
+    return this.patientRepository.save(patient);
+  }
+
   async remove(id: number): Promise<void> {
     const patient = await this.findOne(id);
     await this.patientRepository.remove(patient);

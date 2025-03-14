@@ -9,4 +9,10 @@ export class MailController {
   async sendVerificationCode(@Body('email') email: string) {
     return await this.mailService.sendVerificationCode(email);
   }
+
+  @Post('reset-password')
+  async resetPassword(@Body('email') email: string) {
+    return await this.mailService.resetPassword(email);
+  }
+
 }

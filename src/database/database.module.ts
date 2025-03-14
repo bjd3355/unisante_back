@@ -11,6 +11,7 @@ import { PatientModule } from '../Module/patient/patient.module';
 import { SpecialtyModule } from '../Module/specialty/specialty.module';
 import { AuthModule } from '../Module/auth/auth.module';
 import { MailModule } from '../Module/mail/mail.module';
+import { MessagesModule } from '../Module/messages/messages.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { MailModule } from '../Module/mail/mail.module';
     PatientModule,
     SpecialtyModule,
     MailModule,
+    MessagesModule,
     AuthModule, // ✅ Ajout du module d'authentification
   ],
   controllers: [AppController],

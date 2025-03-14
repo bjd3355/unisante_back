@@ -20,4 +20,17 @@ export class UpdateDoctorDto {
   @IsOptional()
   @IsNumber()
   specialtyId?: number;
+
+  @IsOptional()
+  @IsString()
+  phoneNumber?: string;
+
+  @IsOptional()
+  @IsString()
+  address: string;
+
+  // Nouveau champ pour l'image
+  @IsOptional()
+  @IsString()
+  image?: string;
 }

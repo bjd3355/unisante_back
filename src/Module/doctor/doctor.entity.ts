@@ -17,8 +17,18 @@ export class Doctor {
   @Column({ unique: true })
   email: string;
 
+  @Column({ type: 'varchar', length: 100 })
+  address: string;
+
+  @Column({ type: 'varchar', length: 20, nullable: true })
+  phoneNumber: string;
+
   @Column({ default: true })
   availability: boolean;
+
+  // Nouveau champ pour stocker l'image (URL ou chemin)
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  image: string;
 
   @ManyToOne(() => Specialty, (specialty) => specialty.doctors, { eager: true })
   specialty: Specialty;
